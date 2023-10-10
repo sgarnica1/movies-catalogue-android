@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.kotlin.tmbd.R
 import com.example.kotlin.tmbd.data.repository.MovieRepository
 import com.example.kotlin.tmbd.databinding.ActivityMainBinding
 import com.example.kotlin.tmbd.domain.model.MovieBase
@@ -18,12 +20,14 @@ import kotlinx.coroutines.launch
 class MainActivity : Activity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter: MovieAdapter = MovieAdapter()
+    private lateinit var searchView: SearchView
+    private val originalMoviesList: ArrayList<MovieBase> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
-        // setUpRecyclerView(testData())
         getPopularMoviesList()
+        initializeSearchView()
     }
 
     private fun initializeBinding() {
@@ -31,88 +35,38 @@ class MainActivity : Activity() {
         setContentView(binding.root)
     }
 
-    private fun testData(): ArrayList<MovieBase> {
-        val result = ArrayList<MovieBase>()
+    private fun initializeSearchView() {
+        searchView = findViewById(R.id.searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val filteredMovies = filterMovies(query)
+                adapter.updateData(filteredMovies)
+                return true
+            }
 
-        // Add the first movie
-        result.add(
-            MovieBase(
-                false,
-                "/mRGmNnh6pBAGGp6fMBMwI8iTBUO.jpg",
-                arrayListOf(27, 9648, 53),
-                968051,
-                "en",
-                "The Nun II",
-                "In 1956 France, a priest is violently murdered, and Sister Irene begins to investigate. She once again comes face-to-face with a powerful evil.",
-                4160.929,
-                "/5gzzkR7y3hnY8AD1wXjCnVlHba5.jpg",
-                "2023-09-06",
-                "The Nun II",
-                false,
-                7.0,
-                776
-            )
-        )
-
-        // Add the second movie
-        result.add(
-            MovieBase(
-                false,
-                "/cHNqobjzfLj88lpIYqkZpecwQEC.jpg",
-                arrayListOf(28, 53, 80),
-                926393,
-                "en",
-                "The Equalizer 3",
-                "Robert McCall finds himself at home in Southern Italy but he discovers his friends are under the control of local crime bosses. As events turn deadly, McCall knows what he has to do: become his friends' protector by taking on the mafia.",
-                3761.779,
-                "/b0Ej6fnXAP8fK75hlyi2jKqdhHz.jpg",
-                "2023-08-30",
-                "The Equalizer 3",
-                false,
-                7.4,
-                612
-            )
-        )
-
-        // Add the third movie
-        result.add(
-            MovieBase(
-                false,
-                "/pA3vdhadJPxF5GA1uo8OPTiNQDT.jpg",
-                arrayListOf(28, 18),
-                678512,
-                "en",
-                "Sound of Freedom",
-                "The story of Tim Ballard, a former US government agent, who quits his job in order to devote his life to rescuing children from global sex traffickers.",
-                2724.044,
-                "/qA5kPYZA7FkVvqcEfJRoOy4kpHg.jpg",
-                "2023-07-03",
-                "Sound of Freedom",
-                false,
-                8.1,
-                754
-            )
-        )
-        result.add(
-            MovieBase(
-                false,
-                "/6MKr3KgOLmzOP6MSuZERO41Lpkt.jpg",
-                arrayListOf(28, 12, 14, 878),
-                460465,
-                "en",
-                "Mortal Kombat 3",
-                "Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe.",
-                4512.0,
-                "/nkayOAUBUu4mMvyNf9iHSUiPjF1.jpg",
-                "2021-04-07",
-                "Mortal Kombat 3",
-                false,
-                7.8,
-                1198
-            )
-        )
-        return result
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val filteredMovies = filterMovies(newText)
+                adapter.updateData(filteredMovies)
+                return true
+            }
+        })
     }
+
+
+    private fun filterMovies(query: String?): List<MovieBase> {
+        return if (query.isNullOrEmpty()) {
+            // Si el query está vacío o nulo, retorna la lista original
+            originalMoviesList
+        } else {
+            // Filtra las películas que coincidan con la búsqueda
+            adapter.data.filter { movie ->
+                movie.title.contains(query, ignoreCase = true)
+            }
+        }
+    }
+
+
+
 
     private fun getPopularMoviesList() {
         CoroutineScope(Dispatchers.IO).launch {
@@ -126,6 +80,11 @@ class MainActivity : Activity() {
                 showErrorView()
                 return@launch
             }
+
+            // Copiar los datos a la lista original
+            originalMoviesList.clear()
+            originalMoviesList.addAll(result.results)
+
             CoroutineScope(Dispatchers.Main).launch{
                 setUpRecyclerView(result?.results!!)
             }
