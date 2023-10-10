@@ -11,19 +11,17 @@ class MovieRepository {
 
     class MovieRepository(){}
 
+    /**
+     * @brief Obtener la lista de peliculas populares
+     * @param page: pagina de la lista de peliculas
+     */
     suspend fun getPopularMovies(page: Int): MovieObject?{
-        Log.d("getPopularMovies", "getPopularMovies")
         val authToken = Constants.authToken
-        Log.d("getPopularMovies", "$authToken")
         api = NetworkModelDI(authToken, MovieAPIService::class.java)
-        Log.d("getPopularMovies", "$api")
         return try {
-            val res = api.getPopularMovies(page)
-            Log.d("getPopularMovies", "$res")
-            res
+            api.getPopularMovies(page)
         } catch (e:java.lang.Exception) {
             e.printStackTrace()
-            Log.d("getPopularMovies", e.toString())
             null
         }
 

@@ -14,7 +14,7 @@ object NetworkModelDI {
     private val gsonFactory: GsonConverterFactory = GsonConverterFactory.create()
 
     /**
-     * Crea una instancia de un servicio API configurada para una API específica.
+     * @brief Crea una instancia de un servicio API configurada para una API específica.
      *
      * @param authToken El token de autenticación que se utilizará para las solicitudes API.
      * @param apiServiceClass La clase de la interfaz del servicio API.
