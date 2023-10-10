@@ -26,6 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ErrorActivity"
+            android:exported="true"
+            android:theme="@style/Theme.TMBD.NoActionBar"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

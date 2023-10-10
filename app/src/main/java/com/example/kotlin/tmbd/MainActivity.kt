@@ -1,6 +1,7 @@
 package com.example.kotlin.tmbd
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +17,7 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
-        setUpRecyclerView(testData())
+        // setUpRecyclerView(testData())
         getPopularMoviesList()
     }
 
@@ -90,7 +91,16 @@ class MainActivity : Activity() {
             val repository = MovieRepository()
             val result: MovieObject? =
                 repository.getPopularMovies(1)
+            Log.d("Salida", result.toString())
             Log.d("Salida", result?.count.toString())
+
+            if(result == null){
+                showErrorView()
+                return@launch
+            }
+            CoroutineScope(Dispatchers.Main).launch{
+                setUpRecyclerView(result?.results!!)
+            }
         }
     }
 
@@ -106,5 +116,10 @@ class MainActivity : Activity() {
         binding.MoviesList.adapter = adapter
     }
 
+    private fun showErrorView() {
+        val intent: Intent = Intent(this, ErrorActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
 
 }
