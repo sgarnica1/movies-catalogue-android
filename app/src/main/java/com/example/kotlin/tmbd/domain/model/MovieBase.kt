@@ -1,4 +1,4 @@
-package com.example.kotlin.tmbd
+package com.example.kotlin.tmbd.domain.model
 
 import com.google.gson.annotations.SerializedName
 

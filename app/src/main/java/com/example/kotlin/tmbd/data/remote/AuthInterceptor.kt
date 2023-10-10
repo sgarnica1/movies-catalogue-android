@@ -1,4 +1,4 @@
-package com.example.kotlin.tmbd
+package com.example.kotlin.tmbd.data.remote
 
 import okhttp3.Interceptor
 import okhttp3.Response
