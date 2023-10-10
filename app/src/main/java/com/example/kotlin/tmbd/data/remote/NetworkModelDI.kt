@@ -1,5 +1,6 @@
-package com.example.kotlin.tmbd
+package com.example.kotlin.tmbd.data.remote
 
+import com.example.kotlin.tmbd.utils.Constants
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

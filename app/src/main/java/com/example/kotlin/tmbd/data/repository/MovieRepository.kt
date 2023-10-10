@@ -1,7 +1,12 @@
-package com.example.kotlin.tmbd
+package com.example.kotlin.tmbd.data.repository
+
+import com.example.kotlin.tmbd.data.remote.MovieAPIService
+import com.example.kotlin.tmbd.domain.model.MovieObject
+import com.example.kotlin.tmbd.data.remote.NetworkModelDI
+import com.example.kotlin.tmbd.utils.Constants
 
 class MovieRepository {
-    private lateinit var api:MovieAPIService
+    private lateinit var api: MovieAPIService
 
     class MovieRepository(){}
 

@@ -1,4 +1,4 @@
-package com.example.kotlin.tmbd
+package com.example.kotlin.tmbd.framework.views
 
 import android.app.Activity
 import android.os.Bundle

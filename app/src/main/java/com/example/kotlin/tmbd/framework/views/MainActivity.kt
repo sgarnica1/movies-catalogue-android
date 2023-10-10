@@ -1,10 +1,14 @@
-package com.example.kotlin.tmbd
+package com.example.kotlin.tmbd.framework.views
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kotlin.tmbd.framework.ui.adapters.MovieAdapter
+import com.example.kotlin.tmbd.domain.model.MovieBase
+import com.example.kotlin.tmbd.domain.model.MovieObject
+import com.example.kotlin.tmbd.data.repository.MovieRepository
 import com.example.kotlin.tmbd.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
