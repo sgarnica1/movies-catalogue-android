@@ -1,5 +1,6 @@
 package com.example.kotlin.tmbd.data.repository
 
+import android.util.Log
 import com.example.kotlin.tmbd.data.remote.MovieAPIService
 import com.example.kotlin.tmbd.domain.model.MovieObject
 import com.example.kotlin.tmbd.data.remote.NetworkModelDI
@@ -11,12 +12,18 @@ class MovieRepository {
     class MovieRepository(){}
 
     suspend fun getPopularMovies(page: Int): MovieObject?{
+        Log.d("getPopularMovies", "getPopularMovies")
         val authToken = Constants.authToken
+        Log.d("getPopularMovies", "$authToken")
         api = NetworkModelDI(authToken, MovieAPIService::class.java)
+        Log.d("getPopularMovies", "$api")
         return try {
-            api.getPopularMovies(page)
+            val res = api.getPopularMovies(page)
+            Log.d("getPopularMovies", "$res")
+            res
         } catch (e:java.lang.Exception) {
             e.printStackTrace()
+            Log.d("getPopularMovies", e.toString())
             null
         }
 

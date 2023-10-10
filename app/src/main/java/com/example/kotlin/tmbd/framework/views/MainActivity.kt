@@ -22,7 +22,7 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
-        setUpRecyclerView(testData())
+        // setUpRecyclerView(testData())
         getPopularMoviesList()
     }
 
@@ -122,13 +122,13 @@ class MainActivity : Activity() {
             Log.d("Salida", result.toString())
             Log.d("Salida", result?.count.toString())
 
-            /* if(result == null){
+            if(result == null){
                 showErrorView()
                 return@launch
             }
             CoroutineScope(Dispatchers.Main).launch{
                 setUpRecyclerView(result?.results!!)
-            } */
+            }
         }
     }
 
