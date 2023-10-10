@@ -32,6 +32,11 @@ class SplashscreenActivity: AppCompatActivity() {
         setContentView(binding.root)
     }
 
+    /**
+     * @brief Pasa a la vista de MainActivity
+     * @details Se crea un intent para pasar a la vista de MainActivity y se finaliza la actividad
+     * actual
+     */
     private fun passViewGoToMain() {
         var intent: Intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)

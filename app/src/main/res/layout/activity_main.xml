@@ -6,15 +6,23 @@
     android:padding="20dp">
 
     <TextView
+        android:id="@+id/TVHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Películas Populares"
         android:textSize="30sp" />
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/TVHeader"
+        android:iconifiedByDefault="false" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
+        android:layout_below="@id/searchView"
         android:id="@+id/MoviesList" />
 
 </RelativeLayout>

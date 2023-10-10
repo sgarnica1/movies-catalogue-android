@@ -28,4 +28,15 @@ class MovieAdapter: RecyclerView.Adapter<MovieViewHolder>() {
     override fun getItemCount(): Int {
         return data.size
     }
+
+    /**
+     * @brief Actualiza los datos del adapter
+     * @param newData Nuevos datos a mostrar
+     * @return Unit
+     */
+    fun updateData(newData: List<MovieBase>) {
+        data.clear()
+        data.addAll(newData)
+        notifyDataSetChanged()
+    }
 }

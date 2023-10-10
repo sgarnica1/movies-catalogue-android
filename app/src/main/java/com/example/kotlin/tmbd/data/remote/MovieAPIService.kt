@@ -1,5 +1,6 @@
 package com.example.kotlin.tmbd.data.remote
 
+import android.util.Log
 import com.example.kotlin.tmbd.domain.model.MovieObject
 import retrofit2.http.GET
 import retrofit2.http.Query
