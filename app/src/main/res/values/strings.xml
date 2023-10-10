@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TMBD</string>
+    <string name="splash_screen_text">TMBD</string>
 </resources>
