@@ -10,6 +10,12 @@ import kotlinx.coroutines.launch
 class SplashscreenViewModel: ViewModel() {
     val finishedLoading = MutableLiveData<Boolean>()
 
+    /**
+     * @brief Este método se encarga de simular el tiempo de carga de la aplicación
+     * @details Este método se encarga de simular el tiempo de carga de la aplicación
+     * @param
+     * @return
+     */
     fun onCreate() {
         finishedLoading.postValue(false)
         viewModelScope.launch {

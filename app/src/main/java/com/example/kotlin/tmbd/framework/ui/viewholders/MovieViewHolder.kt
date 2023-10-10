@@ -17,6 +17,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MovieViewHolder (private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
+    /**
+     * @brief Asigna los valores de la película a los elementos de la vista
+     * @param item Película
+     * @param context Contexto de la aplicación
+     */
     fun bind(item: MovieBase, context: Context) {
         binding.TVName.text = item.title
         binding.TVRating.text = item.voteAverage.toString() + "/10"
@@ -26,8 +31,13 @@ class MovieViewHolder (private val binding: ItemMovieBinding) : RecyclerView.Vie
         getMoviePoster(item.posterPath, context)
     }
 
+    /**
+     * @brief Acorta la descripción de la película para que no ocupe tanto espacio en la pantalla
+     * @param overview Descripción de la película
+     * @return Descripción acortada
+     */
     private fun cropOverview(overview: String): String {
-        val maxLength = 50
+        val maxLength = 100
         return if (overview.length <= maxLength) {
             overview
         } else {
@@ -35,6 +45,12 @@ class MovieViewHolder (private val binding: ItemMovieBinding) : RecyclerView.Vie
         }
     }
 
+    /**
+     * @brief Obtiene el póster de la película
+     * @param posterPath Ruta del póster
+     * @param context Contexto de la aplicación
+     * @return Descripción acortada
+     */
     private fun getMoviePoster(posterPath: String, context: Context) {
         val requestOptions = RequestOptions()
             .centerCrop()
@@ -43,7 +59,6 @@ class MovieViewHolder (private val binding: ItemMovieBinding) : RecyclerView.Vie
             .priority(Priority.HIGH)
 
         val urlImage = Constants.SERVER_BASE_URL_IMAGE + posterPath
-        Log.d("Salida", urlImage)
 
         // Load the image on the main thread using Glide
         Glide.with(context)

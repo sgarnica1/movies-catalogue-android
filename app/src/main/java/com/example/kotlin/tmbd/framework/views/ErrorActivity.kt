@@ -11,6 +11,9 @@ class ErrorActivity: Activity() {
         initializeBinding()
     }
 
+    /**
+     * @brief Inicializa el binding
+     */
     private fun initializeBinding() {
         binding = ActivityErrorBinding.inflate(layoutInflater)
         setContentView(binding.root)

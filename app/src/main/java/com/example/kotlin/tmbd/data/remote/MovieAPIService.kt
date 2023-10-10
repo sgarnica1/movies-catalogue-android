@@ -7,8 +7,5 @@ import retrofit2.http.Query
 
 interface MovieAPIService {
     @GET("popular")
-    suspend fun getPopularMovies(@Query("page") page: Int): MovieObject {
-        Log.d("getPopularMovies", "getPopularMoviesAPI")
-        return MovieObject(0, arrayListOf(), 0, 0)
-    }
+    suspend fun getPopularMovies(@Query("page") page: Int): MovieObject
 }

@@ -30,11 +30,23 @@ class MainActivity : Activity() {
         initializeSearchView()
     }
 
+    /**
+     * @brief Inicializa el binding
+     */
     private fun initializeBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 
+
+    /**
+     * @brief Inicializa el SearchView
+     * @details Se inicializa el SearchView y se le asigna un listener para que se actualice la lista
+     * de películas cada vez que se realice una búsqueda
+     * @see filterMovies
+     * @see adapter
+     * @see originalMoviesList
+     */
     private fun initializeSearchView() {
         searchView = findViewById(R.id.searchView)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -53,12 +65,16 @@ class MainActivity : Activity() {
     }
 
 
+    /**
+     * @brief Filtra las películas que coincidan con el query
+     * @param query El query a buscar
+     * @return Una lista de películas que coincidan con el query
+     * @see adapter
+     */
     private fun filterMovies(query: String?): List<MovieBase> {
         return if (query.isNullOrEmpty()) {
-            // Si el query está vacío o nulo, retorna la lista original
             originalMoviesList
         } else {
-            // Filtra las películas que coincidan con la búsqueda
             adapter.data.filter { movie ->
                 movie.title.contains(query, ignoreCase = true)
             }
@@ -66,22 +82,20 @@ class MainActivity : Activity() {
     }
 
 
-
-
+    /**
+     * @brief Obtiene la lista de películas populares
+     * @details Se obtiene la lista de películas populares y se actualiza el RecyclerView
+     */
     private fun getPopularMoviesList() {
         CoroutineScope(Dispatchers.IO).launch {
             val repository = MovieRepository()
             val result: MovieObject? =
                 repository.getPopularMovies(1)
-            Log.d("Salida", result.toString())
-            Log.d("Salida", result?.count.toString())
-
             if(result == null){
                 showErrorView()
                 return@launch
             }
 
-            // Copiar los datos a la lista original
             originalMoviesList.clear()
             originalMoviesList.addAll(result.results)
 
@@ -91,6 +105,11 @@ class MainActivity : Activity() {
         }
     }
 
+    /**
+     * @brief Actualiza el RecyclerView
+     * @param dataForList La lista de películas a mostrar
+     * @see adapter
+     */
     private fun setUpRecyclerView(dataForList: ArrayList<MovieBase>) {
         binding.MoviesList.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(
@@ -108,5 +127,4 @@ class MainActivity : Activity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
-
 }
